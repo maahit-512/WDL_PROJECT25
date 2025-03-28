@@ -1,0 +1,17 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBJPdGxGcITveHMRp_xvAEgHz1UGHe5p68",
+  authDomain: "virtual-herbal-garden25.firebaseapp.com",
+  projectId: "virtual-herbal-garden25",
+  storageBucket: "virtual-herbal-garden25.firebasestorage.app",
+  messagingSenderId: "808868270294",
+  appId: "1:808868270294:web:d475f6b0d5b23a11897977"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);

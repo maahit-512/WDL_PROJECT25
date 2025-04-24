@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Virtual Herbal Garden - Home</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Open+Sans&display=swap" rel="stylesheet">
+  <style>
+    /* Navigation bar */
+    nav {
+      background: #1a3c24;
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      margin: 0 20px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.1em;
+      transition: color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      color: #71e289;
+    }
+
+    /* Flashy button styles */
+    .cta {
+      display: inline-block;
+      padding: 12px 24px;
+      background: linear-gradient(45deg, #28a745, #71e289);
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 128, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta:hover {
+      background: linear-gradient(45deg, #218838, #5cd873);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 128, 0, 0.4);
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+      );
+      transition: 0.5s;
+    }
+
+    .cta:hover::before {
+      left: 100%;
+    }
+
+    /* Smooth text transitions */
+    h1, p, h2 {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .loaded h1, .loaded p, .loaded h2 {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Section styles */
+    section {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    /* Upward scrolling names animation */
+    .credits {
+      text-align: center;
+      padding: 40px 0;
+      overflow: hidden;
+      height: 150px;
+    }
+
+    .credits h2 {
+      margin-bottom: 20px;
+    }
+
+    .name-scroller {
+      position: relative;
+      height: 50px;
+      overflow: hidden;
+    }
+
+    .name-scroller span {
+      display: block;
+      font-size: 1.2em;
+      position: absolute;
+      width: 100%;
+      opacity: 0;
+      transform: translateY(100%);
+      animation: scrollUp 12s linear infinite;
+    }
+
+    .name-scroller span:nth-child(1) { animation-delay: 0s; }
+    .name-scroller span:nth-child(2) { animation-delay: 3s; }
+    .name-scroller span:nth-child(3) { animation-delay: 6s; }
+    .name-scroller span:nth-child(4) { animation-delay: 9s; }
+
+    @keyframes scrollUp {
+      0% {
+        opacity: 0;
+        transform: translateY(100%);
+      }
+      10%, 30% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      40%, 100% {
+        opacity: 0;
+        transform: translateY(-100%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="plants.html">Plants</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <h1>Virtual Herbal Garden</h1>
+    <p>Explore the power of nature through Ayurveda, Unani, Siddha & Homeopathy.</p>
+    <a href="plants.html" class="cta">Explore Plants</a>
+  </section>
+
+  <section class="credits">
+    <h2>Made By</h2>
+    <div class="name-scroller">
+      <span>Atharva Deshmukh</span>
+      <span>Prathmesh Naik</span>
+      <span>Maahit Bhawsar</span>
+      <span>Pranav Shirode</span>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Virtual Herbal Garden | Made by Atharva Deshmukh and Team</p>
+  </footer>
+
+  <audio id="hoverSound" src="sounds/hover.mp3" preload="auto"></audio>
+  <audio id="rainSound" src="sounds/rain.mp3" preload="auto" loop></audio>
+
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      document.body.classList.add('loaded');
+
+      // Play background rain sound with user interaction fallback
+      const rainSound = document.getElementById('rainSound');
+      rainSound.volume = 1;
+      const playRainSound = () => {
+        rainSound.play().catch(error => {
+          console.log('Autoplay prevented:', error);
+          document.addEventListener('click', () => {
+            rainSound.play();
+          }, { once: true });
+        });
+      };
+      playRainSound();
+
+      // Hover sound for interactive elements
+      const hoverSound = document.getElementById('hoverSound');
+      document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          if (hoverSound) {
+            hoverSound.currentTime = 0;
+            hoverSound.play();
+          }
+        });
+      });
+
+      // ScrollReveal animations
+      ScrollReveal().reveal('.hero h1', {
+        delay: 200,
+        duration: 1000,
+        origin: 'top',
+        distance: '50px',
+        easing: 'ease-in-out',
+      });
+
+      ScrollReveal().reveal('.hero p', {
+        delay: 400,
+        duration: 1000,
+        origin: 'bottom',
+        distance: '50px',
+        easing: 'ease-in-out',
+      });
+
+      ScrollReveal().reveal('.cta', {
+        delay: 600,
+        duration: 1000,
+        origin: 'bottom',
+        distance: '30px',
+        easing: 'ease-in-out',
+        scale: 0.95,
+      });
+
+      ScrollReveal().reveal('.credits', {
+        delay: 800,
+        duration: 1200,
+        origin: 'bottom',
+        distance: '60px',
+        easing: 'ease-in-out',
+        reset: true
+      });
+    });
+  </script>
+</body>
+</html>
